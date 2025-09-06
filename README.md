@@ -33,7 +33,7 @@ The project is designed with an **OOP approach**:
 
 ## 🖼️ Visual Representation
 
-Here’s a high-level diagram of the Trie operations:
+Here’s a high-level diagram of the basic Trie operations:
 
 ```mermaid
 flowchart TD
