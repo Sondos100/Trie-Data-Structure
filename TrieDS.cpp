@@ -41,7 +41,14 @@ private:
             results.push_back(currentWord);
         }
 
-        // TODO: Implement this function
+        for (int i = 0; i < 26; i++)
+        {
+            if (node->children[i] != nullptr)
+            {
+                char nxt = 'a' + i;
+                findAllWords(node->children[i], currentWord + nxt, results);
+            }
+        }
     }
 
 public:
@@ -51,7 +58,7 @@ public:
     // Purpose: Initialize the Trie with a root node
     Trie()
     {
-        // TODO: Implement this function
+        root = new TrieNode();
     }
 
     // Insert a word into the Trie
