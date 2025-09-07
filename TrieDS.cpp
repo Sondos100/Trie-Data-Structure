@@ -4,8 +4,7 @@
 using namespace std;
 
 // Each node in the Trie
-class TrieNode
-{
+class TrieNode {
 public:
     // Each node has up to 26 children (for each letter)
     TrieNode *children[26];
@@ -14,19 +13,16 @@ public:
     bool isEndOfWord;
 
     // Constructor
-    TrieNode()
-    {
+    TrieNode() {
         isEndOfWord = false;
-        for (int i = 0; i < 26; i++)
-        {
+        for (int i = 0; i < 26; i++) {
             children[i] = nullptr;
         }
     }
 };
 
 // The Trie class
-class Trie
-{
+class Trie {
 private:
     TrieNode *root;
 
@@ -34,17 +30,13 @@ private:
     // Input: current node, current word formed so far, results vector to store words
     // Output: none (modifies results vector by reference)
     // Purpose: Recursively find all complete words starting from the given node
-    void findAllWords(TrieNode *node, string currentWord, vector<string> &results)
-    {
-        if (node->isEndOfWord)
-        {
+    void findAllWords(TrieNode *node, string currentWord, vector<string> &results) {
+        if (node->isEndOfWord) {
             results.push_back(currentWord);
         }
 
-        for (int i = 0; i < 26; i++)
-        {
-            if (node->children[i] != nullptr)
-            {
+        for (int i = 0; i < 26; i++) {
+            if (node->children[i] != nullptr) {
                 char nxt = 'a' + i;
                 findAllWords(node->children[i], currentWord + nxt, results);
             }
@@ -56,8 +48,7 @@ public:
     // Input: none
     // Output: none
     // Purpose: Initialize the Trie with a root node
-    Trie()
-    {
+    Trie() {
         root = new TrieNode();
     }
 
@@ -65,20 +56,25 @@ public:
     // Input: word to insert (string)
     // Output: none
     // Purpose: Add a word to the Trie by creating nodes for each character
-    void insert(string word)
-    {
-        // TODO: Implement this function
+    void insert(string word) {
+        TrieNode *curr = root;
+        for (char c: word) {
+            c = tolower(c);
+            if (curr->children[c - 'a'] == nullptr) {
+                curr->children[c - 'a'] = new TrieNode();
+            }
+            curr = curr->children[c - 'a'];
+        }
+        curr->isEndOfWord = true;
     }
 
     // Search for a word in the Trie
     // Input: word to search for (string)
     // Output: boolean indicating if the word exists
     // Purpose: Check if the complete word exists in the Trie
-    bool search(string word)
-    {
-        TrieNode* node = root;
-        for (char c : word)
-        {
+    bool search(string word) {
+        TrieNode *node = root;
+        for (char c: word) {
             c = tolower(c);
             int index = c - 'a';
             if (index < 0 || index >= 26) return false;
@@ -92,8 +88,7 @@ public:
     // Input: prefix to check (string)
     // Output: boolean indicating if any word has this prefix
     // Purpose: Verify if the prefix exists in the Trie (doesn't need to be a complete word)
-    bool startsWith(string prefix)
-    {
+    bool startsWith(string prefix) {
         // TODO: Implement this function
         return false; // placeholder
     }
@@ -102,8 +97,7 @@ public:
     // Input: prefix to complete (string)
     // Output: vector of strings that start with the prefix
     // Purpose: Find all complete words that begin with the given prefix
-    vector<string> autocomplete(string prefix)
-    {
+    vector<string> autocomplete(string prefix) {
         // 1. Create a ptr of type TrieNode and set it to root.
         // 2. Traverse to get the start node to collect words from.
         // 3. Check validity of prefix characters and existence in Trie.
@@ -112,19 +106,16 @@ public:
         vector<string> suggestions;
         TrieNode *node = root;
 
-        for (int i = 0; i < prefix.size(); i++)
-        {
+        for (int i = 0; i < prefix.size(); i++) {
             int charIndex = prefix[i] - 'a';
 
             // To easily modify according to the supported chars.
-            if (charIndex < 0 || charIndex >= 26)
-            {
+            if (charIndex < 0 || charIndex >= 26) {
                 return {}; // Invalid character
             }
 
             // To handle uninserted characters.
-            if (!node->children[charIndex])
-            {
+            if (!node->children[charIndex]) {
                 return {}; // No words with this prefix
             }
 
@@ -141,8 +132,7 @@ public:
 // Input: none
 // Output: integer return code
 // Purpose: Program entry point, run tests and interactive demo
-int main()
-{
+int main() {
     cout << "=== TRIE DATA STRUCTURE IMPLEMENTATION ===" << endl;
     cout << "Testing all Trie functionalities..." << endl;
 
@@ -153,23 +143,20 @@ int main()
     cout << "======================================" << endl;
 
     vector<string> words = {"apple", "banana", "orange", "grape", "kiwi"};
-    for (const string &word : words)
-    {
+    for (const string &word: words) {
         trie.insert(word);
         cout << "Inserted: " << word << endl;
     }
 
     // Test search for existing words
-    for (const string &word : words)
-    {
+    for (const string &word: words) {
         bool found = trie.search(word);
         cout << "Search '" << word << "': " << (found ? "FOUND" : "NOT FOUND") << endl;
     }
 
     // Test search for non-existing words
     vector<string> nonExisting = {"app", "ban", "ora", "graph", "kiwis"};
-    for (const string &word : nonExisting)
-    {
+    for (const string &word: nonExisting) {
         bool found = trie.search(word);
         cout << "Search '" << word << "': " << (found ? "FOUND" : "NOT FOUND") << " (expected: NOT FOUND)" << endl;
     }
@@ -179,17 +166,16 @@ int main()
     cout << "==========================" << endl;
 
     vector<string> prefixes = {"app", "ban", "ora", "grap", "k"};
-    for (const string &prefix : prefixes)
-    {
+    for (const string &prefix: prefixes) {
         bool hasPrefix = trie.startsWith(prefix);
         cout << "Prefix '" << prefix << "': " << (hasPrefix ? "EXISTS" : "DOESN'T EXIST") << endl;
     }
 
     vector<string> nonPrefixes = {"x", "yield", "zed", "micro", "nano"};
-    for (const string &prefix : nonPrefixes)
-    {
+    for (const string &prefix: nonPrefixes) {
         bool hasPrefix = trie.startsWith(prefix);
-        cout << "Prefix '" << prefix << "': " << (hasPrefix ? "EXISTS" : "DOESN'T EXIST") << " (expected: DOESN'T EXIST)" << endl;
+        cout << "Prefix '" << prefix << "': " << (hasPrefix ? "EXISTS" : "DOESN'T EXIST") <<
+                " (expected: DOESN'T EXIST)" << endl;
     }
 
     // Test 3: Autocomplete functionality
@@ -197,18 +183,13 @@ int main()
     cout << "======================================" << endl;
 
     vector<string> testPrefixes = {"a", "b", "o", "g", "k", "ap", "ban", "ora", "gr", "ki"};
-    for (const string &prefix : testPrefixes)
-    {
+    for (const string &prefix: testPrefixes) {
         vector<string> suggestions = trie.autocomplete(prefix);
         cout << "Autocomplete for '" << prefix << "': ";
-        if (suggestions.empty())
-        {
+        if (suggestions.empty()) {
             cout << "No suggestions found";
-        }
-        else
-        {
-            for (size_t i = 0; i < suggestions.size(); i++)
-            {
+        } else {
+            for (size_t i = 0; i < suggestions.size(); i++) {
                 if (i > 0)
                     cout << ", ";
                 cout << suggestions[i];
@@ -230,14 +211,10 @@ int main()
 
     vector<string> emptySuggestions = trie.autocomplete("");
     cout << "Autocomplete for empty string: ";
-    if (emptySuggestions.empty())
-    {
+    if (emptySuggestions.empty()) {
         cout << "No suggestions found";
-    }
-    else
-    {
-        for (size_t i = 0; i < emptySuggestions.size(); i++)
-        {
+    } else {
+        for (size_t i = 0; i < emptySuggestions.size(); i++) {
             if (i > 0)
                 cout << ", ";
             cout << emptySuggestions[i];
@@ -250,33 +227,26 @@ int main()
     cout << "================================" << endl;
 
     vector<string> additionalWords = {"application", "appetizer", "banister", "bandana", "oracle", "grapefruit"};
-    for (const string &word : additionalWords)
-    {
+    for (const string &word: additionalWords) {
         trie.insert(word);
         cout << "Inserted: " << word << endl;
     }
 
     // Test search for new words
-    for (const string &word : additionalWords)
-    {
+    for (const string &word: additionalWords) {
         bool found = trie.search(word);
         cout << "Search '" << word << "': " << (found ? "FOUND" : "NOT FOUND") << endl;
     }
 
     // Test autocomplete with new words
     vector<string> newPrefixes = {"app", "ban", "ora", "gra"};
-    for (const string &prefix : newPrefixes)
-    {
+    for (const string &prefix: newPrefixes) {
         vector<string> suggestions = trie.autocomplete(prefix);
         cout << "Autocomplete for '" << prefix << "': ";
-        if (suggestions.empty())
-        {
+        if (suggestions.empty()) {
             cout << "No suggestions found";
-        }
-        else
-        {
-            for (size_t i = 0; i < suggestions.size(); i++)
-            {
+        } else {
+            for (size_t i = 0; i < suggestions.size(); i++) {
                 if (i > 0)
                     cout << ", ";
                 cout << suggestions[i];
@@ -293,8 +263,7 @@ int main()
     trie.insert("WORLD");
 
     vector<string> caseWords = {"hello", "Hello", "WORLD", "world"};
-    for (const string &word : caseWords)
-    {
+    for (const string &word: caseWords) {
         bool found = trie.search(word);
         cout << "Search '" << word << "': " << (found ? "FOUND" : "NOT FOUND") << endl;
     }
@@ -302,6 +271,4 @@ int main()
     cout << "\n=== ALL TESTS COMPLETED ===" << endl;
 
     return 0;
-
 }
-
