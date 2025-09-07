@@ -10,12 +10,12 @@ This project was developed as part of the **FuzeTek Summer Internship 2025 (Proj
 
 ## 🚀 Features
 
-- **Word Insertion** → Add new words to the Trie.  
-- **Word Search** → Check if a complete word exists.  
-- **Prefix Checking** → Verify if words start with a given prefix.  
-- **Autocomplete** → Suggest words that match a prefix.  
-- **Edge Case Handling** → Handles empty strings, non-existent prefixes, and case sensitivity.  
-- **Test Suite** → Includes multiple scenarios to validate functionalities.  
+- **Word Insertion** → Add new words to the Trie.
+- **Word Search** → Check if a complete word exists.
+- **Prefix Checking** → Verify if words start with a given prefix.
+- **Autocomplete** → Suggest words that match a prefix.
+- **Edge Case Handling** → Handles empty strings, non-existent prefixes, and case sensitivity.
+- **Test Suite** → Includes multiple scenarios to validate functionalities.
 
 ---
 
@@ -23,17 +23,17 @@ This project was developed as part of the **FuzeTek Summer Internship 2025 (Proj
 
 The project is designed with an **OOP approach**:
 
-| Class      | Responsibility |
-|------------|----------------|
-| `TrieNode` | Represents a node with up to 26 children and an end-of-word flag. |
+| Class      | Responsibility                                                           |
+| ---------- | ------------------------------------------------------------------------ |
+| `TrieNode` | Represents a node with up to 26 children and an end-of-word flag.        |
 | `Trie`     | Provides core operations: insert, search, prefix checking, autocomplete. |
-| `Main`     | Runs test cases and demonstrates Trie functionalities interactively. |
+| `Main`     | Runs test cases and demonstrates Trie functionalities interactively.     |
 
 ---
 
 ## 🖼️ Visual Representation
 
-Here’s a high-level diagram of the Trie operations:
+Here’s a high-level diagram of the basic Trie operations:
 
 ```mermaid
 flowchart TD
@@ -51,6 +51,7 @@ flowchart TD
     K -->|Prefix Found| L[DFS to Collect All Words]
     K -->|Prefix Missing| M[No Suggestions]
 ```
+
 ---
 
 ## 📖 Example Usage
@@ -83,13 +84,13 @@ vector<string> results = trie.autocomplete("app");
 
 Tries are widely used in real-world systems such as:
 
-- 🔍 **Search Engines** → Autocomplete and query suggestions  
-- 📖 **Spell Checkers** → Word lookup and corrections  
-- 📱 **Contact Lists** → Quick name suggestions  
-- 📚 **Dictionary Implementations** → Efficient storage and retrieval  
-- 🌐 **IP Routing** → Fast lookup of routing tables using prefix matching  
+- 🔍 **Search Engines** → Autocomplete and query suggestions
+- 📖 **Spell Checkers** → Word lookup and corrections
+- 📱 **Contact Lists** → Quick name suggestions
+- 📚 **Dictionary Implementations** → Efficient storage and retrieval
+- 🌐 **IP Routing** → Fast lookup of routing tables using prefix matching
 - 🎮 **Games** → Efficient word storage and validation in word-based games
-  
+
 ---
 
 ## ⚙️ Installation & Usage
@@ -99,7 +100,6 @@ Tries are widely used in real-world systems such as:
    git clone https://github.com/Sondos100/Trie-DS-Implementation.git
    ```
 2. Compile the code
-   
 3. Run the program
 
 ---
@@ -108,8 +108,7 @@ Tries are widely used in real-world systems such as:
 
 Through this project, we gained experience in:
 
-- Implementing efficient **tree-based data structures**.  
-- Applying **OOP design principles** in C++.  
-- Writing **modular and testable code**.  
+- Implementing efficient **tree-based data structures**.
+- Applying **OOP design principles** in C++.
+- Writing **modular and testable code**.
 - Understanding **real-world applications** of Tries in software systems.
-  
