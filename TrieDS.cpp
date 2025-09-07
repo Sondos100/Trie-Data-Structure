@@ -76,16 +76,16 @@ public:
     // Purpose: Check if the complete word exists in the Trie
     bool search(string word)
     {
-    TrieNode* node = root;
-    for (char c : word)
-    {
-        c = tolower(c);
-        int index = c - 'a';
-        if (index < 0 || index >= 26) return false;
-        if (!node->children[index]) return false;
-        node = node->children[index];
-    }
-    return node->isEndOfWord;
+        TrieNode* node = root;
+        for (char c : word)
+        {
+            c = tolower(c);
+            int index = c - 'a';
+            if (index < 0 || index >= 26) return false;
+            if (!node->children[index]) return false;
+            node = node->children[index];
+        }
+        return node->isEndOfWord;
     }
 
     // Check if any word starts with the given prefix
@@ -304,3 +304,4 @@ int main()
     return 0;
 
 }
+
