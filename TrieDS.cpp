@@ -76,8 +76,16 @@ public:
     // Purpose: Check if the complete word exists in the Trie
     bool search(string word)
     {
-        // TODO: Implement this function
-        return false; // placeholder
+    TrieNode* node = root;
+    for (char c : word)
+    {
+        c = tolower(c);
+        int index = c - 'a';
+        if (index < 0 || index >= 26) return false;
+        if (!node->children[index]) return false;
+        node = node->children[index];
+    }
+    return node->isEndOfWord;
     }
 
     // Check if any word starts with the given prefix
@@ -294,4 +302,5 @@ int main()
     cout << "\n=== ALL TESTS COMPLETED ===" << endl;
 
     return 0;
+
 }
