@@ -152,7 +152,7 @@ public:
 
         for (int i = 0; i < prefix.size(); i++)
         {
-            int charIndex = prefix[i] - 'a';
+            int charIndex = tolower(prefix[i]) - 'a';
 
             // To easily modify according to the supported chars.
             if (charIndex < 0 || charIndex >= 26)
