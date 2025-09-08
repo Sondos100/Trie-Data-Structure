@@ -67,7 +67,21 @@ public:
     // Purpose: Add a word to the Trie by creating nodes for each character
     void insert(string word)
     {
-        // TODO: Implement this function
+        TrieNode *curr = root;
+
+        for (char c : word)
+        {
+            c = tolower(c);
+
+            if (curr->children[c - 'a'] == nullptr)
+            {
+                curr->children[c - 'a'] = new TrieNode();
+            }
+
+            curr = curr->children[c - 'a'];
+        }
+
+        curr->isEndOfWord = true;
     }
 
     // Search for a word in the Trie
@@ -76,8 +90,23 @@ public:
     // Purpose: Check if the complete word exists in the Trie
     bool search(string word)
     {
-        // TODO: Implement this function
-        return false; // placeholder
+        TrieNode *node = root;
+
+        for (char c : word)
+        {
+            c = tolower(c);
+            int index = c - 'a';
+
+            if (index < 0 || index >= 26)
+                return false;
+
+            if (!node->children[index])
+                return false;
+
+            node = node->children[index];
+        }
+
+        return node->isEndOfWord;
     }
 
     // Check if any word starts with the given prefix
@@ -86,8 +115,25 @@ public:
     // Purpose: Verify if the prefix exists in the Trie (doesn't need to be a complete word)
     bool startsWith(string prefix)
     {
-        // TODO: Implement this function
-        return false; // placeholder
+        TrieNode *current = root;
+
+        for (char c : prefix)
+        {
+            if (!isalpha(c))
+                return false;
+
+            c = tolower(c);
+            int index = c - 'a';
+
+            if (current->children[index] == nullptr)
+            {
+                return false;
+            }
+
+            current = current->children[index];
+        }
+
+        return true;
     }
 
     // Get all words that start with the given prefix
