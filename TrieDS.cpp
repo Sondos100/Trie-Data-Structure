@@ -136,6 +136,38 @@ public:
         return countWordsHelper(root);
     }
 
+    int prefixCount(const string& prefix)
+    {
+        TrieNode* node = root;
+        vector<pair<string, int>> result;
+
+        for (int i = 0; i < prefix.size(); i++)
+        {
+            int charIndex = tolower(prefix[i]) - 'a';
+
+            // To easily modify according to the supported chars. // To handle uninserted characters.
+            if (charIndex < 0 || charIndex >= 26 || !node->children[charIndex])
+            {
+                return {}; // Invalid character
+            }
+            node = node->children[charIndex];
+        }
+
+        findAllWords(node, prefix, result);
+
+        return result.size();
+    }
+
+    vector<pair<string, int>> Lexicographical()
+    {
+        vector<pair<string, int>> result;
+        TrieNode* node = root;
+        string curr = "";
+
+        findAllWords(node, curr, result);
+
+        return result;
+    }
 
     // Search for a word in the Trie
     // Input: word to search for (string)
@@ -449,6 +481,33 @@ int main()
         bool found = trie.search(word);
         cout << "Search '" << word << "': " << (found ? "FOUND" : "NOT FOUND") << endl;
     }
+
+    // Test 7: Lexicographical Word Listing
+    cout << "\n7. Lexicographical Word Listing:" << endl;
+    cout << "============================" << endl;
+
+    vector<pair<string, int>> result = trie.Lexicographical();
+    cout << "[ " << result[0].first;
+    for (int i = 1; i < result.size(); i++)
+    {
+        cout << " , " << result[i].first;
+    }
+    cout << " ]" << endl;
+
+    cout << "\n8. Prefix Word Count:" << endl;
+    cout << "============================" << endl;
+
+    cout << "Prefix 'app' ->  Count: " << trie.prefixCount("app") << "  // Expected: 3 -> appetizer, apple, application" << endl;
+    cout << "Prefix 'ban' ->  Count: " << trie.prefixCount("ban") << "  // Expected: 3 -> banana, bandana, banister" << endl;
+    cout << "Prefix 'gra' ->  Count: " << trie.prefixCount("gra") << "  // Expected: 2 -> grape, grapefruit" << endl;
+    cout << "Prefix 'or' ->   Count: " << trie.prefixCount("or") << "  // Expected: 2 -> oracle, orange" << endl;
+    cout << "Prefix 'he' ->   Count: " << trie.prefixCount("he") << "  // Expected: 1 -> hello" << endl;
+    cout << "Prefix 'ki' ->   Count: " << trie.prefixCount("ki") << "  // Expected: 1 -> kiwi" << endl;
+    cout << "Prefix 'w' ->    Count: " << trie.prefixCount("w") << "  // Expected: 1 -> world" << endl;
+    cout << "Prefix 'z' ->    Count: " << trie.prefixCount("z") << "  // Expected: 0 -> no word" << endl;
+    cout << "Prefix 'appl' -> Count: " << trie.prefixCount("appl") << "  // Expected: 2 -> apple, application" << endl;
+    cout << "Prefix '' ->     Count: " << trie.prefixCount("") << "  // Expected: 12 -> all words in Trie" << endl;
+
 
     cout << "\n=== ALL TESTS COMPLETED ===" << endl;
 
