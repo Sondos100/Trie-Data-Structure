@@ -40,6 +40,7 @@ private:
     // Input: current node, current word formed so far, results vector to store words
     // Output: none (modifies results vector by reference)
     // Purpose: Recursively find all complete words starting from the given node
+
     void findAllWords(TrieNode* node, string currentWord, vector<pair<string, int>>& results)
     {
         if (node->isEndOfWord)
@@ -57,6 +58,22 @@ private:
         }
     }
 
+    // 1. If node is null, return 0.
+    // 2. Add 1 if this node marks the end of a word.
+    // 3. Recursively check all 26 children.
+    // 4. Return the total count of words.
+    int countWordsHelper(TrieNode* node) {
+        if (!node) return 0;
+
+        int count = node->isEndOfWord; // bool -> 0 or 1
+
+        for (int i = 0; i < 26; i++) {
+            if (node->children[i] != nullptr) {
+                count += countWordsHelper(node->children[i]);
+            }
+        }
+        return count;
+    }
 public:
     // Constructor
     // Input: none
@@ -98,6 +115,7 @@ public:
         }
     }
 
+
     int getFrequency(string word) {
         TrieNode* node = root;
         for (char c : word) {
@@ -110,6 +128,15 @@ public:
         return 0;
 
     }
+
+    // 1. Start counting words from the root node.
+    // 2. Pass the root to the recursive helper.
+    int countWords()
+    {
+        return countWordsHelper(root);
+    }
+
+
     // Search for a word in the Trie
     // Input: word to search for (string)
     // Output: boolean indicating if the word exists
@@ -182,7 +209,9 @@ public:
         // 3. Check validity of prefix characters and existence in Trie.
         // 4. Use helper to collect all words from that node & return.
 
+
         vector<pair<string, int>> suggestions;
+
         TrieNode* node = root;
 
         for (int i = 0; i < prefix.size(); i++)
@@ -228,7 +257,9 @@ int main()
     cout << "\n1. Testing basic insertion and search:" << endl;
     cout << "======================================" << endl;
 
+
     vector<string> words = { "apple", "banana", "orange", "grape", "kiwi" ,"apple" };
+
     for (const string& word : words)
     {
         if (trie.insert(word)) {
@@ -238,6 +269,7 @@ int main()
             cout << "Inserted: " << word << " (duplicate)" << endl;
         }
     }
+
 
     bool found = trie.search("apple");
     cout << "Search 'apple': " << (found ? "FOUND" : "NOT FOUND") << "  frequency  = 1 " << endl;
@@ -256,6 +288,9 @@ int main()
 
     found = trie.search("kiwi");
     cout << "Search 'kiwi':  " << (found ? "FOUND" : "NOT FOUND") << "  frequency  = 2 " << endl;
+
+    cout << "Unique Word Count :   " << trie.countWords() << endl;
+
     // Test search for existing words
     for (const string& word : words)
     {
@@ -346,7 +381,9 @@ int main()
     cout << "\n5. Testing with additional words:" << endl;
     cout << "================================" << endl;
 
+
     vector<string> additionalWords = { "application", "appetizer","application", "banister","oracle", "bandana", "oracle", "grapefruit" };
+
     for (const string& word : additionalWords)
     {
         if (trie.insert(word)) {
@@ -357,11 +394,15 @@ int main()
         }
     }
 
+
     found = trie.search("bandana");
     cout << "Search 'bandana': " << (found ? "FOUND" : "NOT FOUND") << "  frequency  = 1 " << endl;
 
     found = trie.search("application");
     cout << "Search 'application': " << (found ? "FOUND" : "NOT FOUND") << "  frequency  = 1 " << endl;
+
+
+    cout << "Unique Word Count :   " << trie.countWords() << endl;
 
     // Test search for new words
     for (const string& word : additionalWords)
@@ -398,6 +439,9 @@ int main()
 
     trie.insert("Hello");
     trie.insert("WORLD");
+    cout << "Inserted: Hello" << endl;
+    cout << "Inserted: WORLD" << endl;
+    cout << "Unique Word Count :   " << trie.countWords() << endl;
 
     vector<string> caseWords = { "hello", "Hello", "WORLD", "world" };
     for (const string& word : caseWords)
