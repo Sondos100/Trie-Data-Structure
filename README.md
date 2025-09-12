@@ -114,7 +114,7 @@ Tries are foundational in many real-world applications:
    ```
 2. Compile the code using any C++ compiler (e.g., `g++`, `clang++`):
    ```bash
-   g++ -std=c++17 main.cpp -o trie
+   g++ -std=c++17 TrieDS.cpp -o trie
    ```
 3. Run the program:
    ```bash
